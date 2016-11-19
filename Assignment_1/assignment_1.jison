@@ -1,3 +1,7 @@
+%{
+  var represent = require('./representation.js');
+%}
+
 %lex
 %%
 
@@ -18,10 +22,10 @@
 %start expression
 %%
 
-expression : e EOF { console.log("Result: ",$$) };
+expression : e EOF { console.log("Result: ",represent($1)) };
 
-e : e '*' e { $$ = "(" + $1 + $2 + $3 + ")" }|
-    e '/' e { $$ = "(" + $1 + $2 + $3 + ")" }|
-    e '+' e { $$ = "(" + $1 + $2 + $3 + ")" }|
-    e '-' e { $$ = "(" + $1 + $2 + $3 + ")" }|
+e : e '*' e {$$ = {parent:$2, leftChild:$1, rightChild:$3} }|
+    e '/' e {$$ = {parent:$2, leftChild:$1, rightChild:$3} }|
+    e '+' e {$$ = {parent:$2, leftChild:$1, rightChild:$3} }|
+    e '-' e {$$ = {parent:$2, leftChild:$1, rightChild:$3} }|
     NUMBER;
