@@ -1,7 +1,3 @@
-%{
-  var represent = require('./representation.js');
-%}
-
 %lex
 %%
 
@@ -22,7 +18,7 @@
 %start expression
 %%
 
-expression : e EOF { console.log("Result: ",represent($1)) };
+expression : e EOF { return $$; };
 
 e : e '*' e {$$ = {parent:$2, leftChild:$1, rightChild:$3} }|
     e '/' e {$$ = {parent:$2, leftChild:$1, rightChild:$3} }|

@@ -1,3 +1,9 @@
+var fs = require("fs");
+var jison = require("jison");
+
+var bnf = fs.readFileSync("./assignment_1.jison", "utf8");
+var parser = new jison.Parser(bnf);
+
 function represent(tree) {
 	if(!tree.leftChild.parent && !tree.rightChild.parent) {
 		return '(' + tree.leftChild + tree.parent + tree.rightChild + ')';
@@ -13,4 +19,4 @@ function represent(tree) {
 	}
 }
 
-module.exports = represent;
+console.log("Represent = ",represent(parser.parse('1+2-3')));
