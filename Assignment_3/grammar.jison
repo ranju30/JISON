@@ -26,5 +26,9 @@ e :
     e '+' e {
     operator = node.createOperatorNode($2)
     $$ = new Tree(operator,$1,$3)
+    } |
+    e '-' e {
+    operator = node.createOperatorNode($2)
+    $$ = new Tree(operator,$1,$3)
     }
     | NUMBER {$$ = node.createNumberNode($1);};
