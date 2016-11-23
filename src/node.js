@@ -1,15 +1,18 @@
 var operatorEvaluaters = {
     '+': function(left, right) {
-        return left.evaluate() + right.evaluate()
+        return left.evaluate() + right.evaluate();
     },
     '-': function(left, right) {
-        return left.evaluate() - right.evaluate()
+        return left.evaluate() - right.evaluate();
     },
     '*': function(left, right) {
-        return left.evaluate() * right.evaluate()
+        return left.evaluate() * right.evaluate();
     },
     '/': function(left, right) {
-        return left.evaluate() / right.evaluate()
+        return left.evaluate() / right.evaluate();
+    },
+    '^': function(left,right){
+      return Math.pow(left.evaluate(),right.evaluate());
     }
 }
 

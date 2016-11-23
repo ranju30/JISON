@@ -1,5 +1,5 @@
 function Tree(root, leftLeaf, rightLeaf) {
-    this.parentNode = root;
+    this.root = root;
     this.leftLeaf = leftLeaf;
     this.rightLeaf = rightLeaf;
     this.evaluate = function() {
