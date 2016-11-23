@@ -16,12 +16,31 @@ var operatorEvaluaters = {
     }
 }
 
+var operatorRepresentator = {
+  '+': function(left, right) {
+      return '(' + left.evaluate() +" + "+ right.evaluate() + ')';
+  },
+  '-': function(left, right) {
+      return '(' + left.evaluate() +" - "+ right.evaluate() + ')';
+  },
+  '*': function(left, right) {
+      return '(' + left.evaluate() +" * "+ right.evaluate() + ')';
+  },
+  '/': function(left, right) {
+      return '(' + left.evaluate() +" / "+ right.evaluate() + ')';
+  },
+  '^': function(left,right){
+    return '(' + left.evaluate() +" ^ "+ right.evaluate() + ')';
+  }
+}
+
 var node = {
     createOperatorNode : function(operator) {
         return {
             type: "Operator",
             value: operator,
-            evaluate: operatorEvaluaters[operator]
+            evaluate: operatorEvaluaters[operator],
+            represent: operatorRepresentator[operator]
         }
     },
     createNumberNode : function(number) {
