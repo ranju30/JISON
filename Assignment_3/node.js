@@ -4,6 +4,12 @@ var operatorEvaluaters = {
     },
     '-': function(left, right) {
         return left.evaluate() - right.evaluate()
+    },
+    '*': function(left, right) {
+        return left.evaluate() * right.evaluate()
+    },
+    '/': function(left, right) {
+        return left.evaluate() / right.evaluate()
     }
 }
 

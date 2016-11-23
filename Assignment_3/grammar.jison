@@ -5,10 +5,13 @@
 [0-9]+       return 'NUMBER'
 "+"          return '+'
 "-"          return '-'
+"*"          return '*'
+"/"          return '/'
 <<EOF>>      return 'EOF'
 /lex
 
 %left '-','+'
+%left '*','/'
 
 %{
     const path = require('path');
@@ -28,6 +31,16 @@ e :
     $$ = new Tree(operator,$1,$3)
     } |
     e '-' e {
+    operator = node.createOperatorNode($2)
+    $$ = new Tree(operator,$1,$3)
+    }
+    } |
+    e '*' e {
+    operator = node.createOperatorNode($2)
+    $$ = new Tree(operator,$1,$3)
+    }
+    } |
+    e '/' e {
     operator = node.createOperatorNode($2)
     $$ = new Tree(operator,$1,$3)
     }
