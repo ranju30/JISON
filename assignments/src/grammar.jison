@@ -48,7 +48,27 @@ allIdentifier
       {
         operator = node.createOperatorNode($2)
         $$ = new Tree(operator,variable.evaluate(),$3)
-      };
+      }
+    | IDENTIFIER '-' e ';'
+      {
+        operator = node.createOperatorNode($2)
+        $$ = new Tree(operator,variable.evaluate(),$3)
+      }
+    | IDENTIFIER '*' e ';'
+      {
+        operator = node.createOperatorNode($2)
+        $$ = new Tree(operator,variable.evaluate(),$3)
+      }
+    | IDENTIFIER '/' e ';'
+      {
+        operator = node.createOperatorNode($2)
+        $$ = new Tree(operator,variable.evaluate(),$3)
+      }
+    | IDENTIFIER '^' e ';'
+      {
+        operator = node.createOperatorNode($2)
+        $$ = new Tree(operator,variable.evaluate(),$3)
+      }  ;
 
 e
   : e '+' e
