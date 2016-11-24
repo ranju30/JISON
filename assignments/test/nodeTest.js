@@ -1,7 +1,7 @@
 var assert = require('assert');
 var node = require('../src/node.js');
 
-describe('operator node test',function(){
+describe('node test',function(){
   it('should create a opeartor node',function(){
     var expected = {type: "Operator",value: '+',evaluate:{'+':function(){}}}
     var actual = node.createOperatorNode('+');
@@ -18,9 +18,11 @@ describe('operator node test',function(){
   });
 
   it('should create a assignment node',function(){
-    var expected = {type: "Assignment",value:'=',evaluate:function(){return this.value}}
-    var actual = node.createAssignmentNode('=');
+    var expected = {type: "Assignment",name:'x',value:'2',evaluate:function(){return this.value}}
+    var actual = node.createAssignmentNode('x','=','2');
     assert.equal(expected.type,actual.type);
+    assert.equal(expected.name,actual.name);
     assert.equal(expected.value,actual.value);
+    assert.equal(2,actual.evaluate());
   })
 });

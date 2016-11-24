@@ -20,8 +20,7 @@ describe('evaluator test',function(){
   it('Should return the evaluated value for given expression power',function(){
     assert.equal(8,evaluator('2^3;'));
   });
-
-  it.only('Should return the evaluated value for given expression with assignment',function(){
-    assert.equal(8,evaluator('x=2;x+2;'));
+  it('Should return the evaluated value for given expression with assignment',function(){
+    assert.equal(4,evaluator('x=2;x+2;'));
   });
 });

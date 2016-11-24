@@ -22,13 +22,14 @@
     var path = require('path');
     var node = require(path.resolve("./src/node.js"));
     var Tree = require(path.resolve("./src/tree.js"));
+    var variable;
 %}
 
 
 %start expression
 %%
 
-expression : tree EOF {console.log($$);return $$ };
+expression : tree EOF {return $$ };
 
 tree
   : tree e ';'
@@ -38,7 +39,16 @@ tree
   | {$$ = [];};
 
 allIdentifier
-    : IDENTIFIER '=' e ';';
+    : IDENTIFIER '=' e ';'
+      {
+        identifier = node.createIdentifierNode($1)
+        variable = node.createAssignmentNode(identifier,$2,$3)
+      }
+    | IDENTIFIER '+' e ';'
+      {
+        operator = node.createOperatorNode($2)
+        $$ = new Tree(operator,variable.evaluate(),$3)
+      };
 
 e
   : e '+' e
@@ -66,7 +76,9 @@ e
       operator = node.createOperatorNode($2)
       $$ = new Tree(operator,$1,$3)
     }
-  | NUMBER {$$ = node.createNumberNode($1);}
-  | IDENTIFIER
-      {$$ = node.createAssignmentNode($1);}
+  | NUMBER
+    {
+      $$ = node.createNumberNode($1);
+    }
+
   ;

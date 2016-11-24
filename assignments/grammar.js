@@ -95,6 +95,9 @@ break;
 case 4:
 this.$ = [];
 break;
+case 5:
+console.log($$[$0-3],$$[$0-2],$$[$0-1]);node.createAssignmentNode($$[$0-3],$$[$0-2],$$[$0-1])
+break;
 case 6: case 7: case 8: case 9: case 10:
 
       operator = node.createOperatorNode($$[$0-1])
@@ -105,7 +108,7 @@ case 11:
 this.$ = node.createNumberNode($$[$0]);
 break;
 case 12:
-this.$ = node.createAssignmentNode($$[$0]);
+console.log($$[$0],'===========');this.$ = node.createIdentifierNode($$[$0]);
 break;
 }
 },
