@@ -2,21 +2,19 @@
 %%
 
 \s+          /* skip whitespace */
-[0-9]+       return 'NUMBER'
-[a-zA-Z]+    return 'IDENTIFIER'
-"+"          return '+'
-"-"          return '-'
-"*"          return '*'
-"/"          return '/'
-"^"          return '^'
-"="          return '='
-";"          return ';'
-<<EOF>>      return 'EOF'
+[0-9]+                    return 'NUMBER'
+[a-zA-Z]+                 return 'IDENTIFIER'
+'+'|'*'|'/'|'^'|'-'       return 'OPERATOR'
+"="                       return 'ASSIGNMENT'
+";"                       return ';'
+<<EOF>>                   return 'EOF'
 /lex
 
 %left '-','+'
 %left '*','/'
-%left '^', '='
+%left '^'
+%right '='
+%left ';'
 
 %{
     var path = require('path');
@@ -29,76 +27,42 @@
 %start expression
 %%
 
-expression : tree EOF {return $$ };
+expression : tree EOF { return $$ };
 
 tree
   : tree e ';'
     {$1.push($2)}
-  | tree allIdentifier
+  | tree assignment
     {$1.push($2)}
   | {$$ = [];};
 
-allIdentifier
-    : IDENTIFIER '=' e ';'
+assignment
+    : IDENTIFIER ASSIGNMENT e ';'
       {
         identifier = node.createIdentifierNode($1)
         variable = node.createAssignmentNode(identifier,$2,$3)
       }
-    | IDENTIFIER '+' e ';'
+    | IDENTIFIER OPERATOR e ';'
       {
-        operator = node.createOperatorNode($2)
-        $$ = new Tree(operator,variable.evaluate(),$3)
+        operation = node.createOperatorNode($2)
+        $$ = new Tree(operation,variable.evaluate(),$3)
       }
-    | IDENTIFIER '-' e ';'
-      {
-        operator = node.createOperatorNode($2)
-        $$ = new Tree(operator,variable.evaluate(),$3)
-      }
-    | IDENTIFIER '*' e ';'
-      {
-        operator = node.createOperatorNode($2)
-        $$ = new Tree(operator,variable.evaluate(),$3)
-      }
-    | IDENTIFIER '/' e ';'
-      {
-        operator = node.createOperatorNode($2)
-        $$ = new Tree(operator,variable.evaluate(),$3)
-      }
-    | IDENTIFIER '^' e ';'
-      {
-        operator = node.createOperatorNode($2)
-        $$ = new Tree(operator,variable.evaluate(),$3)
-      }  ;
+
+    ;
 
 e
-  : e '+' e
-    {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
-    }
-  | e '-' e
-    {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
-    }
-  | e '*' e
-    {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
-    }
-  | e '/' e
-    {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
-    }
-  | e '^' e
-    {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
-    }
-  | NUMBER
+  : NUMBER
     {
       $$ = node.createNumberNode($1);
+    }
+  | IDENTIFIER
+    {
+      $$ = $1;
+    }
+  | e OPERATOR e
+    {
+      operator = node.createOperatorNode($2)
+      $$ = new Tree(operator,$1,$3)
     }
 
   ;

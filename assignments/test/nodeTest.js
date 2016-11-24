@@ -24,5 +24,5 @@ describe('node test',function(){
     assert.equal(expected.name,actual.name);
     assert.equal(expected.value,actual.value);
     assert.equal(2,actual.evaluate());
-  })
+  });
 });
