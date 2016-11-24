@@ -1,3 +1,5 @@
+var storeVariable = {};
+
 var operatorEvaluaters = {
     '+': function(left, right) {
         return left.evaluate() + right.evaluate();
@@ -13,6 +15,9 @@ var operatorEvaluaters = {
     },
     '^': function(left,right){
       return Math.pow(left.evaluate(),right.evaluate());
+    },
+    '=': function (left,right) {
+      return left.evaluate();
     }
 }
 
@@ -30,6 +35,21 @@ var node = {
             value: Number(number),
             evaluate: function(){return this.value}
         }
+    },
+    createAssignmentNode : function(operator){
+      return {
+          type: "Assignment",
+          value: operator,
+          evaluate: operatorEvaluaters[operator]
+      }
+    },
+    createIdentifierNode : function(variable,value){
+      storeVariable[variable] = value;
+      return {
+        type: "Assignment",
+        value: variable,
+        evaluate: function(){return storeVariable[variable]}
+      }
     }
 }
 
