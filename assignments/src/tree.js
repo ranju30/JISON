@@ -3,8 +3,8 @@ function Tree(root, leftLeaf, rightLeaf) {
     this.leftLeaf = leftLeaf;
     this.rightLeaf = rightLeaf;
     this.evaluate = function(memory) {
-      if(leftLeaf.type != 'Number')
-          leftLeaf = memory[leftLeaf];
+        if (leftLeaf.type != 'Number')
+            leftLeaf = memory[leftLeaf];
         return root.evaluate(leftLeaf, rightLeaf);
     }
 };
