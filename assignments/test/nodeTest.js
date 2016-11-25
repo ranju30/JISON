@@ -17,12 +17,11 @@ describe('node test',function(){
     assert.equal(expected.evaluate(),actual.evaluate());
   });
 
-  it('should create a assignment node',function(){
-    var expected = {type: "Assignment",name:'x',value:'2',evaluate:function(){return this.value}}
-    var actual = node.createAssignmentNode('x','=','2');
+  it('should create a identifier node',function(){
+    var expected = {type: "Identifier",value:'x',evaluate:function(){return this.value}}
+    var actual = node.createIdentifierNode('x');
     assert.equal(expected.type,actual.type);
-    assert.equal(expected.name,actual.name);
     assert.equal(expected.value,actual.value);
-    assert.equal(2,actual.evaluate());
+    assert.equal('x',actual.evaluate());
   });
 });

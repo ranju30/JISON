@@ -4,8 +4,12 @@
 \s+          /* skip whitespace */
 [0-9]+                    return 'NUMBER'
 [a-zA-Z]+                 return 'IDENTIFIER'
-'+'|'*'|'/'|'^'|'-'       return 'OPERATOR'
-"="                       return 'ASSIGNMENT'
+"+"					              return '+'
+"-"					              return '-'
+"*"					              return '*'
+"/"					              return '/'
+"^"					              return '^'
+"="                       return '='
 ";"                       return ';'
 <<EOF>>                   return 'EOF'
 /lex
@@ -19,8 +23,9 @@
 %{
     var path = require('path');
     var node = require(path.resolve("./src/node.js"));
-    var Tree = require(path.resolve("./src/tree.js"));
-    var variable;
+    var Tree = require(path.resolve("./src/Tree.js"));
+    var Trees = require(path.resolve("./src/Trees.js"));
+    var AssignmentTree = require(path.resolve("./src/AssignmentTree.js"));
 %}
 
 
@@ -31,23 +36,12 @@ expression : tree EOF { return $$ };
 
 tree
   : tree e ';'
-    {$1.push($2)}
-  | tree assignment
-    {$1.push($2)}
-  | {$$ = [];};
+    {$1.addTree($2)}
+  | {$$ = new Trees();};
 
-assignment
-    : IDENTIFIER ASSIGNMENT e ';'
-      {
-        identifier = node.createIdentifierNode($1)
-        variable = node.createAssignmentNode(identifier,$2,$3)
-      }
-    | IDENTIFIER OPERATOR e ';'
-      {
-        operation = node.createOperatorNode($2)
-        $$ = new Tree(operation,variable.evaluate(),$3)
-      }
-
+end
+    :
+      e ';'
     ;
 
 e
@@ -59,10 +53,35 @@ e
     {
       $$ = $1;
     }
-  | e OPERATOR e
+  | e '+' e
     {
       operator = node.createOperatorNode($2)
       $$ = new Tree(operator,$1,$3)
+    }
+  | e '-' e
+    {
+      operator = node.createOperatorNode($2)
+      $$ = new Tree(operator,$1,$3)
+    }
+  | e '*' e
+    {
+      operator = node.createOperatorNode($2)
+      $$ = new Tree(operator,$1,$3)
+    }
+  | e '/' e
+    {
+      operator = node.createOperatorNode($2)
+      $$ = new Tree(operator,$1,$3)
+    }
+  | e '^' e
+    {
+      operator = node.createOperatorNode($2)
+      $$ = new Tree(operator,$1,$3)
+    }
+  | e '=' e
+    {
+      operator = node.createIdentifierNode($1)
+      $$ = new AssignmentTree(operator,$1,$3);
     }
 
   ;
