@@ -35,7 +35,10 @@ describe('evaluator test', function() {
     it('Should return the evaluated value for given expression with assignment power', function() {
         assert.equal(4, evaluator('x=2;x^2;'));
     });
-    xit('Should return the evaluated value for given expression with assignment multi level expression', function() {
-        assert.equal(35, evaluator('x=10;y=x+20;y+5;'));
+    it('Should return the evaluated value for given expression with assignment multi level expression', function() {
+        assert.equal(30, evaluator('x=10;y=20;x+y;'));
+    });
+    xit('Should return the evaluated value for given expression with assignment multi level expression and evaluate them', function() {
+        assert.equal(60, evaluator('x=10;y=20;z=30;x+y+z;'));
     });
 });

@@ -55,32 +55,32 @@ e
     }
   | e '+' e
     {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
+      operator = node.createOperatorNode($2);
+      $$ = new Tree(operator,$1,$3);
     }
   | e '-' e
     {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
+      operator = node.createOperatorNode($2);
+      $$ = new Tree(operator,$1,$3);
     }
   | e '*' e
     {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
+      operator = node.createOperatorNode($2);
+      $$ = new Tree(operator,$1,$3);
     }
   | e '/' e
     {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
+      operator = node.createOperatorNode($2);
+      $$ = new Tree(operator,$1,$3);
     }
   | e '^' e
     {
-      operator = node.createOperatorNode($2)
-      $$ = new Tree(operator,$1,$3)
+      operator = node.createOperatorNode($2);
+      $$ = new Tree(operator,$1,$3);
     }
   | e '=' e
     {
-      operator = node.createIdentifierNode($1)
+      operator = node.createIdentifierNode($1);
       $$ = new AssignmentTree(operator,$1,$3);
     }
 
