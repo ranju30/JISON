@@ -1,17 +1,15 @@
-var AssignmentTree = require('./AssignmentTree.js');
-
 function Tree(root, leftLeaf, rightLeaf) {
     this.root = root;
     this.leftLeaf = leftLeaf;
     this.rightLeaf = rightLeaf;
     this.evaluate = function(memory) {
-        if (typeof leftLeaf == 'string') {
-            leftLeaf = memory[leftLeaf];
+        if (leftLeaf.type == 'Identifier') {
+            leftLeaf = memory[leftLeaf.evaluate()];
         }
-        if (typeof rightLeaf == 'string') {
-            rightLeaf = memory[rightLeaf];
+        if (rightLeaf.type == 'Identifier') {
+            rightLeaf = memory[rightLeaf.evaluate()];
         }
-        return root.evaluate(leftLeaf, rightLeaf);
+        return root.evaluate(leftLeaf, rightLeaf, memory);
     }
 };
 

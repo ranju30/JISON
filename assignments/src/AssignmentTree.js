@@ -3,7 +3,7 @@ function AssignmentTree(operator, leftLeaf, rightLeaf) {
     this.leftLeaf = leftLeaf;
     this.rightLeaf = rightLeaf;
     this.evaluate = function(memory) {
-        memory[this.leftLeaf] = this.rightLeaf;
+        memory[this.leftLeaf.evaluate()] = this.rightLeaf;
         return memory;
     }
 };

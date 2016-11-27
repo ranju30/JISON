@@ -51,7 +51,7 @@ e
     }
   | IDENTIFIER
     {
-      $$ = $1;
+      $$ = node.createIdentifierNode($1);
     }
   | e '+' e
     {
@@ -80,8 +80,7 @@ e
     }
   | e '=' e
     {
-      operator = node.createIdentifierNode($1);
-      $$ = new AssignmentTree(operator,$1,$3);
+      $$ = new AssignmentTree($2,$1,$3);
     }
 
   ;

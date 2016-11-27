@@ -1,8 +1,5 @@
 function Trees() {
     this.trees = [];
-    this.storage = {
-        'result': 0
-    };
 }
 
 Trees.prototype.addTree = function(tree) {
