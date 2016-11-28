@@ -74,4 +74,13 @@ describe('evaluator test', function() {
         }
         assert.equal('Hey something wrong with you', message);
     });
+    it('Should throw error if evaluation occure before declearing the variable for multiple variable', function() {
+        var message;
+        try {
+            evaluator('x=10;x+10+y;y=10;')
+        } catch (e) {
+            message = e.message;
+        }
+        assert.equal('Hey something wrong with you', message);
+    });
 });

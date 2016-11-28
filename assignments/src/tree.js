@@ -3,7 +3,7 @@ function Tree(root, leftLeaf, rightLeaf) {
     this.leftLeaf = leftLeaf;
     this.rightLeaf = rightLeaf;
     this.evaluate = function(memory) {
-        if (isValidIdentifier(memory, leftLeaf)) {
+        if (isValidIdentifier(memory, leftLeaf, rightLeaf)) {
             throw new Error('Hey something wrong with you');
         }
         leftLeaf = getEvaluatedLeftLeaf(memory, leftLeaf);
@@ -12,8 +12,8 @@ function Tree(root, leftLeaf, rightLeaf) {
     }
 };
 
-var isValidIdentifier = function(memory, leftLeaf) {
-    return leftLeaf.type == 'Identifier' && !memory[leftLeaf.value];
+var isValidIdentifier = function(memory, leftLeaf, rightLeaf) {
+    return (leftLeaf.type == 'Identifier' && !memory[leftLeaf.value]) || (rightLeaf.type == 'Identifier' && !memory[rightLeaf.value]);
 }
 var getEvaluatedLeftLeaf = function(memory, leftLeaf) {
     if (leftLeaf.type == 'Identifier')
